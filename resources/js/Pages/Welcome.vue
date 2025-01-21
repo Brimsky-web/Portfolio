@@ -198,7 +198,7 @@ const socialLinks = [
   {
     id: 2,
     name: "LinkedIn",
-    url: "https://www.linkedin.com/in/janis-strazdins",
+    url: "https://www.linkedin.com/in/j%C4%81nis-strazdi%C5%86%C5%A1-2a033b33b/",
     icon: "fab fa-linkedin"
   }
 ]
