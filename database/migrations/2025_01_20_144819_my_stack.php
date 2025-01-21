@@ -22,6 +22,7 @@ return new class extends Migration
 
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
+            $table->string('icon');
             $table->string('platform');
             $table->string('url')->unique();
             $table->timestamps();

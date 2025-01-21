@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Admin extends Model
 {
-    protected $fillable = [
+
+    //admin type shit
+    protected $admin = [
         'name',
-        'email',
         'password',
     ];
     protected $hidden = [
@@ -16,4 +17,25 @@ class Admin extends Model
         'remember_token',
     ];
 
+
+    //other more stuff
+    protected $projects = [
+        'project_name',
+        'github_repo_url',
+        'technologies',
+        'description',
+    ];
+
+    protected $contacts = [
+        'icon',
+        'platform',
+        'url',
+    ];
+
+    protected $certificates = [
+        'certificate_name',
+        'url',
+        'date',
+    ];
+    use HasFactory;
 }
