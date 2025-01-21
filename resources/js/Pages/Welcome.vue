@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-gray-100 dark:bg-stone-900 relative">
+    <div class="min-h-screen bg-gray-100 dark:bg-stone-900 relative pointer-events-auto">
         <button @click="toggleTheme"
                 type="button" 
                 class="fixed top-4 right-4 p-3 rounded-full bg-gray-200 dark:bg-stone-800 hover:bg-gray-300 dark:hover:bg-stone-700 transition-colors z-50">
@@ -125,66 +125,39 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-48">
             <h1 class="dark:text-white font-bold font-Jura text-5xl text-center mb-24 animate-fade-in">Certificates</h1>
             <div class="grid grid-cols-3 gap-12">
-                <div class="bg-white dark:bg-stone-800 rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 animate-slide-up">
-                    <div class="p-6">
-                        <h3 class="font-Jura text-xl font-bold text-gray-800 dark:text-white mb-2">Full Stack Web Development</h3>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Udemy</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-500 dark:text-gray-400 text-sm">December 2023</span>
-                            <a :href="'https://www.udemy.com/certificate/UC-12345678-9/'" 
-                               target="_blank"
-                               rel="noopener noreferrer"
-                               class="text-blue-500 hover:text-blue-600 flex items-center gap-2 cursor-pointer">
-                                View Certificate
-                                <i class="fas fa-external-link-alt"></i>
-                            </a>
-                        </div>
+                <div v-for="(cert, index) in certificates" 
+                    :key="cert.title"
+                    class="bg-white dark:bg-stone-800 rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 animate-slide-up relative group"
+                    :style="`animation-delay: ${index * 200}ms`">
+                    <div class="p-6 h-full flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-Jura text-xl font-bold text-gray-800 dark:text-white mb-2">{{ cert.title }}</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">{{ cert.provider }}</p>
                     </div>
-                </div>
-
-                <div class="bg-white dark:bg-stone-800 rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 animate-slide-up" style="animation-delay: 200ms">
-                    <div class="p-6">
-                        <h3 class="font-Jura text-xl font-bold text-gray-800 dark:text-white mb-2">Advanced JavaScript</h3>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Codecademy</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-500 dark:text-gray-400 text-sm">November 2023</span>
-                            <a :href="'https://www.codecademy.com/profiles/brimsky/certificates/1234567890abcdef'" 
-                               target="_blank"
-                               rel="noopener noreferrer"
-                               class="text-blue-500 hover:text-blue-600 flex items-center gap-2 cursor-pointer">
-                                View Certificate
-                                <i class="fas fa-external-link-alt"></i>
-                            </a>
-                        </div>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-gray-500 dark:text-gray-400 text-sm">{{ cert.date }}</span>
+                        <a :href="cert.url"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-blue-500 hover:text-blue-600 flex items-center gap-2 z-30 relative">
+                        View Certificate
+                        <i class="fas fa-external-link-alt text-sm"></i>
+                        </a>
                     </div>
-                </div>
-
-                <div class="bg-white dark:bg-stone-800 rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 animate-slide-up" style="animation-delay: 400ms">
-                    <div class="p-6">
-                        <h3 class="font-Jura text-xl font-bold text-gray-800 dark:text-white mb-2">Vue.js 3 Complete Guide</h3>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Vue School</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-500 dark:text-gray-400 text-sm">October 2023</span>
-                            <a :href="'https://vueschool.io/certificates/1234567890abcdef'" 
-                               target="_blank"
-                               rel="noopener noreferrer"
-                               class="text-blue-500 hover:text-blue-600 flex items-center gap-2 cursor-pointer">
-                                View Certificate
-                                <i class="fas fa-external-link-alt"></i>
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <footer class="bg-white dark:bg-stone-800 mt-48">
+        <footer class="bg-white dark:bg-stone-800 mt-48 relative z-20">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <div class="text-center mb-8">
                     <h3 class="font-Jura text-2xl font-bold text-gray-800 dark:text-white mb-4">Contact</h3>
-                    <a href="mailto:janis.strazdinsh@gmail.com" 
-                         class="inline-block text-gray-600 dark:text-gray-300 hover:text-blue-500 transition-colors cursor-pointer">
-                        janis.strazdinsh@gmail.com
-                    </a>
+                    <div class="flex justify-center">  <!-- Added flex container -->
+                        <a href="mailto:janis.strazdinsh@gmail.com" 
+                        class="text-gray-600 dark:text-gray-300 hover:text-blue-500 transition-colors">
+                            janis.strazdinsh@gmail.com
+                        </a>
+                    </div>
                 </div>
 
                 <div class="flex justify-center gap-8 mb-8">
@@ -193,8 +166,8 @@
                         :href="link.url"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="group flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-blue-500 transition-colors cursor-pointer">
-                        <i :class="[link.name === 'GitHub' ? 'fab fa-github' : 'fab fa-linkedin', 'text-2xl group-hover:scale-110 transition-transform']"></i>
+                        class="group flex items-center gap-2 px-4 py-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-stone-700 relative z-30">
+                        <i :class="`text-2xl ${link.icon} group-hover:text-blue-500`"></i>
                         <span class="text-sm group-hover:text-blue-500">{{ link.name }}</span>
                     </a>
                 </div>
@@ -216,17 +189,20 @@ const isDark = ref(
 );
 
 const socialLinks = [
-    {
-        id: 1,
-        name: "GitHub",
-        url: "https://github.com/Brimsky",
-    },
-    {
-        id: 2,
-        name: "LinkedIn",
-        url: "https://www.linkedin.com/in/j%C4%81nis-strazdi%C5%86%C5%A1-2a033b33b/",
-    }
+  {
+    id: 1,
+    name: "GitHub",
+    url: "https://github.com/Brimsky",
+    icon: "fab fa-github"
+  },
+  {
+    id: 2,
+    name: "LinkedIn",
+    url: "https://www.linkedin.com/in/janis-strazdins",
+    icon: "fab fa-linkedin"
+  }
 ]
+
 const projects = [
     {
         id: "1",
@@ -252,6 +228,15 @@ const projects = [
         technologies: ["Python", "BeautifulSoup", "Selenium", "PostgreSQL"],
         description: "Automated web scraping tool for collecting timber price data from various sources."
     }
+];
+
+const certificates = [
+    {
+    title: "Python for Data Science",
+    provider: "Datacamp",
+    date: "2023",
+    url: "https://www.datacamp.com/statement/proof/1b6c1b4d-9d22-4b6f-8f6a-3b4b7d1c4d1a",
+    },
 ];
 
 const selectedProjectId = ref(null);
@@ -377,7 +362,10 @@ html {
 }
 
 .animate-slide-up {
-    animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: slideUp 0.5s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+
 }
 
 .animate-slide-up-delayed {
@@ -406,9 +394,18 @@ html {
     }
 }
 
-a {
-    position: relative;
-    cursor: pointer;
+a[href] {
+  position: relative;
+  cursor: pointer !important;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none !important;
+  outline: none !important;
+}
+footer a[href] {
+  display: flex !important;
+  position: relative;
+  z-index: 10;
 }
 
 a:hover {
@@ -438,13 +435,6 @@ a.hover-underline:hover::after {
     transform-origin: left;
 }
 
-.group {
-    pointer-events: auto;
-}
-
-.group * {
-    pointer-events: auto;
-}
 
 .bg-white.dark\:bg-stone-800 {
     position: relative;
