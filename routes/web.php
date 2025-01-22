@@ -46,9 +46,28 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'show'])->name('admin');
-    Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
-    Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
-    Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+    
+    // Projects routes
+    Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
+    Route::post('/projects/store', [ProjectController::class, 'store'])->name('projects.store');
+    Route::get('/projects/edit/{id}', [ProjectController::class, 'edit'])->name('projects.edit');
+    Route::post('/projects/update/{id}', [ProjectController::class, 'update'])->name('projects.update');
+    Route::get('/projects/destroy/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+    
+    // Certificates routes
+    Route::get('/certificates/create', [CertificateController::class, 'create'])->name('certificates.create');
+    Route::post('/certificates/store', [CertificateController::class, 'store'])->name('certificates.store');
+    Route::get('/certificates/edit/{id}', [CertificateController::class, 'edit'])->name('certificates.edit');
+    Route::post('/certificates/update/{id}', [CertificateController::class, 'update'])->name('certificates.update');
+    Route::get('/certificates/destroy/{id}', [CertificateController::class, 'destroy'])->name('certificates.destroy');
+    
+    // Contacts routes
+    Route::get('/contacts/create', [ContactController::class, 'create'])->name('contacts.create');
+    Route::post('/contacts/store', [ContactController::class, 'store'])->name('contacts.store');
+    Route::get('/contacts/edit/{id}', [ContactController::class, 'edit'])->name('contacts.edit');
+    Route::post('/contacts/update/{id}', [ContactController::class, 'update'])->name('contacts.update');
+    Route::get('/contacts/destroy/{id}', [ContactController::class, 'destroy'])->name('contacts.destroy');
+    
     Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
 });
 
@@ -59,21 +78,3 @@ Route::middleware(['guest'])->group(function () {
     
     Route::post('/login', [AdminController::class, 'login'])->name('login.attempt');
 });
-
-//CRUD routes
-Route::get('/projects/create', [ProjectController::class, 'create']);
-Route::get('/certificates/create', [CertificateController::class, 'create']);
-Route::get('/contacts/create', [ContactController::class, 'create']);
-
-Route::post('/certificates/store', [CertificateController::class, 'store']);
-Route::post('/contacts/store', [ContactController::class, 'store']);
-
-Route::get('/projects/edit/{id}', [ProjectController::class, 'edit']);
-Route::get('/certificates/edit/{id}', [CertificateController::class, 'edit']);
-Route::get('/contacts/edit/{id}', [ContactController::class, 'edit']);
-
-Route::post('/certificates/update/{id}', [CertificateController::class, 'update']);
-Route::post('/contacts/update/{id}', [ContactController::class, 'update']);
-
-Route::get('/certificates/destroy/{id}', [CertificateController::class, 'destroy']);
-Route::get('/contacts/destroy/{id}', [ContactController::class, 'destroy']);
