@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('github_repo_url')->unique();
             $table->string('technologies');
             $table->string('description');
+            $table->string('photo')->nullable();
             $table->timestamps();
         });
 
@@ -29,9 +30,10 @@ return new class extends Migration
         });
         Schema::create('certificates', function (Blueprint $table) {
             $table->id();
-            $table->string('certificate_name');
+            $table->string('certificate_name')->nullable();
+            $table->string('provider')->nullable();
             $table->string('url')->unique();
-            $table->date('date');
+            $table->date('date')->nullable();
             $table->timestamps();
         });
     }

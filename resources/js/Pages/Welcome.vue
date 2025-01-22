@@ -7,27 +7,27 @@
             <i class="fas fa-moon text-gray-300 hidden dark:block text-xl"></i>
         </button>
 
-        <div class="flex items-center justify-center flex-grid relative pt-28">
-            <img src="/img/IMG_2233.png" alt="Janis" class="position-left max-w-md rounded-lg shadow-lg" loading="lazy">
-            <div class="p-24">
-                <h2 class="text-3xl font-bold text-gray-800 dark:text-white p-2">Hi, I'm</h2>
-                <h1 class="dark:text-white font-bold font-Jura text-6xl text-gray-900">Janis Strazdins</h1>
-                <h3 class="dark:text-white font-bold font-Jura text-3xl py-6 px-3">Web developer</h3>
-                <h3 class="dark:text-white font-bold font-Jura text-3xl py-6 px-3">Building things for web</h3>
+        <div class="flex flex-col md:flex-row items-center justify-center relative pt-28 px-4 md:px-0">
+            <img src="/img/IMG_2233.png" alt="Janis" class="w-48 md:w-auto md:max-w-md rounded-lg shadow-lg mb-8 md:mb-0" loading="lazy">
+            <div class="text-center md:text-left md:p-24">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white p-2">Hi, I'm</h2>
+                <h1 class="dark:text-white font-bold font-Jura text-4xl md:text-6xl text-gray-900">Janis Strazdins</h1>
+                <h3 class="dark:text-white font-bold font-Jura text-2xl md:text-3xl py-3 md:py-6 px-3">Web developer</h3>
+                <h3 class="dark:text-white font-bold font-Jura text-2xl md:text-3xl py-3 md:py-6 px-3">Building things for web</h3>
             </div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-32 mb-32">
-            <h1 class="dark:text-white font-bold font-Jura text-5xl text-center mb-16">Brightest works</h1>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 md:mt-32 mb-16 md:mb-32">
+            <h1 class="dark:text-white font-bold font-Jura text-4xl md:text-5xl text-center mb-8 md:mb-16">Brightest works</h1>
             
-            <div class="grid grid-cols-3 gap-8 mb-16">
-                <div v-for="project in projects" 
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 mb-8 md:mb-16">
+                <div v-for="project in props.projects" 
                      :key="project.id" 
                      class="cursor-pointer">
                     <div class="text-center">
                         <h2 @click="toggleProject(project.id)"
-                            class="dark:text-white text-gray-800 font-Jura text-2xl mb-4 hover-underline-animation">
-                            {{ project.name }}
+                            class="dark:text-white text-gray-800 font-Jura text-xl md:text-2xl mb-4 hover-underline-animation">
+                            {{ project.project_name }}
                         </h2>
                     </div>
                 </div>
@@ -44,28 +44,32 @@
             >
                 <div v-if="selectedProjectId" 
                      class="project-details-container overflow-hidden">
-                    <div class="p-8">
-                        <div class="flex gap-12">
-                            <div class="w-1/2 transform"
+                    <div class="p-4 md:p-8">
+                        <div class="flex flex-col md:flex-row gap-6 md:gap-12">
+                            <div class="w-full md:w-1/2 transform"
                                 :class="{ 
                                     'animate-slide-up': selectedProjectId && !isClosing,
                                     'animate-slide-down': isClosing
                                 }">
-                                <img :src="selectedProject.image" 
-                                     :alt="selectedProject.name" 
+                                <img v-if="selectedProject.photo" 
+                                     :src="selectedProject.photo"
+                                     :alt="selectedProject.project_name" 
                                      class="rounded-lg shadow-lg w-full">
+                                <div v-else class="rounded-lg shadow-lg w-full h-48 md:h-64 bg-gray-200 dark:bg-stone-700 flex items-center justify-center">
+                                    <i class="fas fa-image text-3xl md:text-4xl text-gray-400 dark:text-gray-600"></i>
+                                </div>
                             </div>
                             
-                            <div class="w-1/2 dark:text-white transform"
+                            <div class="w-full md:w-1/2 dark:text-white transform"
                                  :class="{ 
                                      'animate-slide-up-delayed': selectedProjectId && !isClosing,
                                      'animate-slide-down-delayed': isClosing
                                  }">
-                                <h2 class="font-Jura text-3xl font-bold mb-6">{{ selectedProject.name }}</h2>
-                                <div class="space-y-6">
+                                <h2 class="font-Jura text-2xl md:text-3xl font-bold mb-4 md:mb-6">{{ selectedProject.project_name }}</h2>
+                                <div class="space-y-4 md:space-y-6">
                                     <div>
-                                        <h3 class="font-Jura text-2xl font-bold mb-2">Github repo:</h3>
-                                        <a :href="selectedProject['github-repo']" 
+                                        <h3 class="font-Jura text-xl md:text-2xl font-bold mb-2">Github repo:</h3>
+                                        <a :href="selectedProject.github_repo_url" 
                                            target="_blank" 
                                            class="text-blue-500 hover:text-blue-600 flex items-center gap-2">
                                             <i class="fab fa-github"></i>
@@ -73,20 +77,19 @@
                                         </a>
                                     </div>
                                     <div>
-                                        <h3 class="font-Jura text-2xl font-bold mb-2">Technologies:</h3>
+                                        <h3 class="font-Jura text-xl md:text-2xl font-bold mb-2">Technologies:</h3>
                                         <ul class="list-disc list-inside space-y-2">
-                                            <li v-for="tech in selectedProject.technologies" 
-                                                :key="tech">{{ tech }}</li>
+                                            <li>{{ selectedProject.technologies }}</li>
                                         </ul>
                                     </div>
                                     <div>
-                                        <h3 class="font-Jura text-2xl font-bold mb-2">Description:</h3>
+                                        <h3 class="font-Jura text-xl md:text-2xl font-bold mb-2">Description:</h3>
                                         <p>{{ selectedProject.description }}</p>
                                     </div>
                                 </div>
                                 
                                 <button @click="closeProject" 
-                                        class="mt-8 bg-gray-200 dark:bg-stone-700 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-stone-600 transition-colors">
+                                        class="mt-6 md:mt-8 bg-gray-200 dark:bg-stone-700 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-stone-600 transition-colors w-full md:w-auto">
                                     Close
                                 </button>
                             </div>
@@ -95,84 +98,84 @@
                 </div>
             </transition>
         </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 md:mt-48">
+            <h1 class="dark:text-white font-bold font-Jura text-4xl md:text-5xl text-center mb-12 md:mb-24 animate-fade-in">Certificates</h1>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-12">
+                <div v-for="(cert, index) in props.certificates" 
+                    :key="cert.title"
+                    class="bg-white dark:bg-stone-800 rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 animate-slide-up relative group"
+                    :style="`animation-delay: ${index * 200}ms`">
+                    <div class="p-4 md:p-6 h-full flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-Jura text-lg md:text-xl font-bold text-gray-800 dark:text-white mb-2">{{ cert.certificate_name }}</h3>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">{{ cert.provider }}</p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-4 gap-2">
+                            <span class="text-gray-500 dark:text-gray-400 text-sm">{{ cert.date }}</span>
+                            <a :href="cert.url"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="text-blue-500 hover:text-blue-600 flex items-center gap-2 z-30 relative">
+                                View Certificate
+                                <i class="fas fa-external-link-alt text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-48">
             <h1 class="dark:text-white font-bold font-Jura text-5xl text-center mb-24 animate-fade-in">Technologies</h1>
-            <div class="grid grid-cols-4 gap-16">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 md:gap-16">
                 <div v-for="(tech, index) in ['Python', 'C#', 'C++', 'PHP', 'SQL', 'JavaScript', 'HTML', 'CSS']" 
                      :key="tech"
                      class="text-center transform hover:scale-110 transition-all duration-300"
                      :style="{ animationDelay: `${index * 100}ms` }"
                      :class="'animate-slide-up'">
-                    <h2 class="dark:text-white text-gray-800 font-Jura text-2xl hover-underline-animation">
+                    <h2 class="dark:text-white text-gray-800 font-Jura text-xl md:text-2xl hover-underline-animation">
                         {{ tech }}
                     </h2>
                 </div>
             </div>
 
-            <h1 class="dark:text-white font-bold font-Jura text-5xl text-center mb-24 mt-48 animate-fade-in">Frameworks</h1>
-            <div class="grid grid-cols-4 gap-16 mb-32">
+            <h1 class="dark:text-white font-bold font-Jura text-4xl md:text-5xl text-center mb-12 md:mb-24 mt-16 md:mt-48 animate-fade-in">Frameworks</h1>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 md:gap-16 mb-16 md:mb-32">
                 <div v-for="(framework, index) in ['Laravel', 'Tailwind', 'Node.js', 'Bootstrap', 'Vue.js', 'Next.js']" 
                      :key="framework"
                      class="text-center transform hover:scale-110 transition-all duration-300"
                      :style="{ animationDelay: `${(index * 100) + 800}ms` }"
                      :class="'animate-slide-up'">
-                    <h2 class="dark:text-white text-gray-800 font-Jura text-2xl hover-underline-animation">
+                    <h2 class="dark:text-white text-gray-800 font-Jura text-xl md:text-2xl hover-underline-animation">
                         {{ framework }}
                     </h2>
                 </div>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-48">
-            <h1 class="dark:text-white font-bold font-Jura text-5xl text-center mb-24 animate-fade-in">Certificates</h1>
-            <div class="grid grid-cols-3 gap-12">
-                <div v-for="(cert, index) in certificates" 
-                    :key="cert.title"
-                    class="bg-white dark:bg-stone-800 rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 animate-slide-up relative group"
-                    :style="`animation-delay: ${index * 200}ms`">
-                    <div class="p-6 h-full flex flex-col justify-between">
-                    <div>
-                        <h3 class="font-Jura text-xl font-bold text-gray-800 dark:text-white mb-2">{{ cert.title }}</h3>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">{{ cert.provider }}</p>
-                    </div>
-                    <div class="flex justify-between items-center mt-4">
-                        <span class="text-gray-500 dark:text-gray-400 text-sm">{{ cert.date }}</span>
-                        <a :href="cert.url"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="text-blue-500 hover:text-blue-600 flex items-center gap-2 z-30 relative">
-                        View Certificate
-                        <i class="fas fa-external-link-alt text-sm"></i>
-                        </a>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer class="bg-white dark:bg-stone-800 mt-48 relative z-20">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <div class="text-center mb-8">
-                    <h3 class="font-Jura text-2xl font-bold text-gray-800 dark:text-white mb-4">Contact</h3>
-                    <div class="flex justify-center">  <!-- Added flex container -->
+        <footer class="bg-white dark:bg-stone-800 mt-16 md:mt-48 relative z-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
+                <div class="text-center mb-6 md:mb-8">
+                    <h3 class="font-Jura text-xl md:text-2xl font-bold text-gray-800 dark:text-white mb-4">Contact</h3>
+                    <div class="flex justify-center">
                         <a href="mailto:janis.strazdinsh@gmail.com" 
-                        class="text-gray-600 dark:text-gray-300 hover:text-blue-500 transition-colors">
+                           class="text-gray-600 dark:text-gray-300 hover:text-blue-500 transition-colors text-sm md:text-base">
                             janis.strazdinsh@gmail.com
                         </a>
                     </div>
                 </div>
 
-                <div class="flex justify-center gap-8 mb-8">
+                <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-6 md:mb-8">
                     <a v-for="link in socialLinks" 
-                        :key="link.id"
-                        :href="link.url"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="group flex items-center gap-2 px-4 py-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-stone-700 relative z-30">
-                        <i :class="`text-2xl ${link.icon} group-hover:text-blue-500`"></i>
+                       :key="link.id"
+                       :href="link.url"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="group flex items-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-stone-700 relative z-30">
+                        <i :class="`text-xl md:text-2xl ${link.icon} group-hover:text-blue-500`"></i>
                         <span class="text-sm group-hover:text-blue-500">{{ link.name }}</span>
                     </a>
                 </div>
 
-                <div class="text-center text-gray-600 dark:text-gray-400">
+                <div class="text-center text-gray-600 dark:text-gray-400 text-sm">
                     {{ new Date().getFullYear() }} Janis Strazdins. All rights reserved.
                 </div>
             </div>
@@ -181,7 +184,22 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, defineProps } from 'vue';
+
+const props = defineProps({
+    projects: {
+        type: Array,
+        required: true
+    },
+    certificates: {
+        type: Array,
+        required: true
+    },
+    contacts: {
+        type: Array,
+        required: true
+    }
+});
 
 const isDark = ref(
     localStorage.getItem('theme') === 'dark' || 
@@ -201,47 +219,10 @@ const socialLinks = [
     url: "https://www.linkedin.com/in/j%C4%81nis-strazdi%C5%86%C5%A1-2a033b33b/",
     icon: "fab fa-linkedin"
   }
-]
-
-const projects = [
-    {
-        id: "1",
-        name: "TimberChart.lv",
-        "github-repo": "https://github.com/Brimsky/statstream_core_features",
-        image: "/img/timberchart.png",
-        technologies: ["Vue.js", "Laravel", "Tailwind CSS", "MySQL"],
-        description: "A web application for analyzing and visualizing timber market data in Latvia."
-    },
-    {
-        id: "2",
-        name: "RSS.lv",
-        "github-repo": "url",
-        image: "/img/rss.png",
-        technologies: ["Vue.js", "Node.js", "Express", "MongoDB"],
-        description: "RSS feed aggregator and reader with customizable categories and notifications."
-    },
-    {
-        id: "3",
-        name: "Timber web scraper",
-        "github-repo": "url",
-        image: "/img/scraper.png",
-        technologies: ["Python", "BeautifulSoup", "Selenium", "PostgreSQL"],
-        description: "Automated web scraping tool for collecting timber price data from various sources."
-    }
-];
-
-const certificates = [
-    {
-    title: "Python for Data Science",
-    provider: "Datacamp",
-    date: "2023",
-    url: "https://www.datacamp.com/statement/proof/1b6c1b4d-9d22-4b6f-8f6a-3b4b7d1c4d1a",
-    },
 ];
 
 const selectedProjectId = ref(null);
 const isClosing = ref(false);
-
 const selectedProject = ref(null);
 
 const startLeaveAnimation = () => {
@@ -263,7 +244,7 @@ const toggleProject = (projectId) => {
         closeProject();
     } else {
         selectedProjectId.value = projectId;
-        selectedProject.value = projects.find(p => p.id === projectId);
+        selectedProject.value = props.projects.find(p => p.id === projectId);
     }
 };
 

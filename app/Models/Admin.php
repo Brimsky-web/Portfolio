@@ -2,40 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-class Admin extends Model
-{
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-    //admin type shit
-    protected $admin = [
+class Admin extends Authenticatable
+{
+    use HasApiTokens, Notifiable;
+
+    protected $fillable = [
         'name',
+        'email',
         'password',
     ];
+
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-
-    //other more stuff
-    protected $projects = [
-        'project_name',
-        'github_repo_url',
-        'technologies',
-        'description',
+    protected $casts = [
+        'email_verified_at' => 'datetime',
     ];
-
-    protected $contacts = [
-        'icon',
-        'platform',
-        'url',
-    ];
-
-    protected $certificates = [
-        'certificate_name',
-        'url',
-        'date',
-    ];
-    use HasFactory;
 }
