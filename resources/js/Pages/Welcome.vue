@@ -17,6 +17,14 @@
             </div>
         </div>
 
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 md:mt-32 mb-16 md:mb-32">  
+            <h1 class="dark:text-white font-bold font-Jura text-4xl md:text-5xl text-center mb-8 md:mb-16">About me</h1>
+            <div class="text-center md:text-left md:p-24">
+                <p class="dark:text-white text-gray-800 text-lg md:text-xl mb-4 md:mb-8">I am a web developer with a passion for building things for the web. I have a strong foundation in programming and problem-solving, and I am always eager to learn new technologies and frameworks.</p>
+                <p class="dark:text-white text-gray-800 text-lg md:text-xl mb-4 md:mb-8">I have experience working with various programming languages and frameworks, including Python, C#, C++, PHP, SQL, JavaScript, HTML, and CSS. I have also worked with frameworks such as Laravel, Tailwind, Node.js, Bootstrap, Vue.js, and Next.js.</p>
+                <p class="dark:text-white text-gray-800 text-lg md:text-xl mb-4 md:mb-8">Friendly and easy to work with. Always open to new challenges and opportunities to learn and grow.</p>
+            </div>
+        </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 md:mt-32 mb-16 md:mb-32">
             <h1 class="dark:text-white font-bold font-Jura text-4xl md:text-5xl text-center mb-8 md:mb-16">Brightest works</h1>
             

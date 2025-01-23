@@ -21,7 +21,7 @@ class ProjectController
             'github_repo_url' => 'required|url',
             'technologies' => 'required',
             'description' => 'required',
-            'photo' => 'nullable|image|max:2048'
+            'photo' => 'nullable|image|max:5120'
         ]);
 
         if ($request->hasFile('photo')) {
@@ -58,7 +58,7 @@ class ProjectController
             'github_repo_url' => 'required|url',
             'technologies' => 'required',
             'description' => 'required',
-            'photo' => 'nullable|image|max:2048'
+            'photo' => 'nullable|image|max:5120'
         ]);
 
         if ($request->hasFile('photo')) {

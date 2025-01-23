@@ -41,7 +41,9 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium dark:text-gray-200">Project Photo</label>
-                        <input type="file" @input="projectForm.photo = $event.target.files[0]" accept="image/*" class="mt-1 w-full">
+                        <input type="file" @input="handlePhotoInput" accept="image/*" class="mt-1 w-full">
+                        <p class="text-sm text-gray-500 mt-1">Maximum file size: 5MB</p>
+                        <div v-if="errors.photo" class="text-red-500 text-sm mt-1">{{ errors.photo }}</div>
                         <img v-if="projectForm.photo_preview" :src="projectForm.photo_preview" class="mt-2 max-w-xs rounded-lg shadow-md">
                     </div>
                     <div class="flex gap-4">
@@ -218,6 +220,25 @@ const projectForm = ref({
     photo_preview: null
 });
 
+const errors = ref({});
+
+const handlePhotoInput = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        // Check file size (5MB = 5 * 1024 * 1024 bytes)
+        if (file.size > 5 * 1024 * 1024) {
+            errors.value.photo = 'The photo must not be larger than 5MB';
+            event.target.value = ''; // Clear the input
+            return;
+        }
+        
+        projectForm.value.photo = file;
+        // Create preview URL
+        projectForm.value.photo_preview = URL.createObjectURL(file);
+        errors.value.photo = null;
+    }
+};
+
 const editProject = (project) => {
     editingProject.value = project;
     projectForm.value = { 
@@ -229,6 +250,7 @@ const editProject = (project) => {
 };
 
 const cancelProjectEdit = () => {
+    showProjectForm.value = false;
     editingProject.value = null;
     projectForm.value = {
         project_name: '',
@@ -238,33 +260,37 @@ const cancelProjectEdit = () => {
         photo: null,
         photo_preview: null
     };
-    showProjectForm.value = false;
+    errors.value = {};
 };
 
 const saveProject = () => {
-    const formData = new FormData();
+    errors.value = {}; // Clear previous errors
+    let formData = new FormData();
     formData.append('project_name', projectForm.value.project_name);
     formData.append('github_repo_url', projectForm.value.github_repo_url);
     formData.append('technologies', projectForm.value.technologies);
     formData.append('description', projectForm.value.description);
-    if (projectForm.value.photo) {
+    
+    if (projectForm.value.photo instanceof File) {
         formData.append('photo', projectForm.value.photo);
     }
 
+    const options = {
+        onSuccess: () => {
+            cancelProjectEdit();
+            router.reload();
+        },
+        onError: (errors) => {
+            console.error('Error:', errors);
+            errors.value = errors;
+        }
+    };
+
     if (editingProject.value) {
-        router.post(`/projects/update/${editingProject.value.id}`, formData, {
-            onSuccess: () => {
-                cancelProjectEdit();
-                router.reload();
-            }
-        });
+        formData.append('_method', 'POST');
+        router.post(`/projects/update/${editingProject.value.id}`, formData, options);
     } else {
-        router.post('/projects/store', formData, {
-            onSuccess: () => {
-                cancelProjectEdit();
-                router.reload();
-            }
-        });
+        router.post('/projects/store', formData, options);
     }
 };
 
