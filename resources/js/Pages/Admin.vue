@@ -132,16 +132,16 @@
         </div>
 
         <!-- Contacts Section -->
-        <div class="mb-16 bg-white dark:bg-stone-800 rounded-lg p-6 shadow-lg">
+        <!-- <div class="mb-16 bg-white dark:bg-stone-800 rounded-lg p-6 shadow-lg">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-3xl font-bold dark:text-white">Contacts</h2>
                 <button @click="showContactForm = true" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition">
                     Add Contact
                 </button>
-            </div>
+            </div> -->
 
             <!-- Contact Form -->
-            <div v-if="showContactForm" class="mb-8 bg-gray-50 dark:bg-stone-700 p-6 rounded-lg">
+            <!-- <div v-if="showContactForm" class="mb-8 bg-gray-50 dark:bg-stone-700 p-6 rounded-lg">
                 <h3 class="text-2xl font-bold mb-4 dark:text-white">{{ editingContact ? 'Edit Contact' : 'Add New Contact' }}</h3>
                 <form @submit.prevent="saveContact" class="space-y-4">
                     <div>
@@ -161,10 +161,10 @@
                         <button type="button" @click="cancelContactEdit" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition">Cancel</button>
                     </div>
                 </form>
-            </div>
+            </div> -->
 
             <!-- Contacts List -->
-            <div class="grid gap-4">
+            <!-- <div class="grid gap-4">
                 <div v-for="contact in contacts" :key="contact.id" class="bg-gray-50 dark:bg-stone-700 p-4 rounded-lg flex justify-between items-center">
                     <div class="flex items-center gap-3">
                         <i :class="contact.icon" class="text-xl"></i>
@@ -179,8 +179,8 @@
                         </button>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div> -->
+        <!-- </div> -->
     </div>
 </template>
 

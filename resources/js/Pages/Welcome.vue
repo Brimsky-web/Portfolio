@@ -126,7 +126,7 @@
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-48">
             <h1 class="dark:text-white font-bold font-Jura text-5xl text-center mb-24 animate-fade-in">Technologies</h1>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 md:gap-16">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 md:gap-16 ">
                 <div v-for="(tech, index) in ['Python', 'C#', 'C++', 'PHP', 'SQL', 'JavaScript', 'HTML', 'CSS']" 
                      :key="tech"
                      class="text-center transform hover:scale-110 transition-all duration-300"

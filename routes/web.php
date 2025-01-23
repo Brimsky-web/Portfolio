@@ -67,8 +67,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/contacts/edit/{id}', [ContactController::class, 'edit'])->name('contacts.edit');
     Route::post('/contacts/update/{id}', [ContactController::class, 'update'])->name('contacts.update');
     Route::get('/contacts/destroy/{id}', [ContactController::class, 'destroy'])->name('contacts.destroy');
-    
     Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
+
 });
 
 Route::middleware(['guest'])->group(function () {
@@ -77,4 +77,5 @@ Route::middleware(['guest'])->group(function () {
     })->name('login');
     
     Route::post('/login', [AdminController::class, 'login'])->name('login.attempt');
+    
 });

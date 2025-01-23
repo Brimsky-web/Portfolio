@@ -62,7 +62,7 @@ class AdminController extends Controller
                 'email' => 'The provided credentials do not match our records.',
             ]);
         } catch (\Exception $e) {
-            \Log::error('Login error: ' . $e->getMessage());
+            // \Log::error('Login error: ' . $e->getMessage());
             return back()->withErrors([
                 'email' => 'An error occurred during login. Please try again.',
             ]);
